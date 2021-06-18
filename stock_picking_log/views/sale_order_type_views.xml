@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sot_sale_order_type_form_view_extend" model="ir.ui.view">
+        <field name="name">sale.order.type.form</field>
+        <field name="model">sale.order.type</field>
+        <field name="inherit_id" ref="sale_order_type.sot_sale_order_type_form_view"/>
+        <field name="arch" type="xml">
+            <field name="incoterm_id" position="after">
+                <field name="en_clima" groups="base.group_no_one"/>
+            </field>
+        </field>
+    </record>
+</odoo>
