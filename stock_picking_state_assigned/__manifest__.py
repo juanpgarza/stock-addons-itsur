@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "depends": ["stock", "stock_picking_state"],
     "data": [
+        'data/data.xml',        
         ],
     "installable": True,
 }

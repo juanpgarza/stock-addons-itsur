@@ -10,16 +10,19 @@ class StockPicking(models.Model):
     def create(self,values):
         # import pdb; pdb.set_trace()
         res = super(StockPicking,self).create(values)
-        res.state_detail_id = 1
+        res.state_detail_id = self.env.ref('stock_picking_state_assigned.picking_state_detail_reservado')
         return res
 
     @api.multi
     def button_validate(self):
         # import pdb; pdb.set_trace()
-        if self.state_detail_id.id == 1:
-            # self.state_detail_id = 2
+        if not self.state_detail_id.end_state:
+            # import pdb; pdb.set_trace()
+            # le tengo que asignar el siguiente estado en la secuencia
+            state_detail_id = self.env['stock.picking.state_detail'].search([('sequence','=',self.state_detail_id.sequence + 1)])
+
             self.write({
-                'state_detail_id': 2
+                'state_detail_id': state_detail_id.id
             })
             # import pdb; pdb.set_trace()
         else:
