@@ -9,7 +9,7 @@
     "website": "https://github.com/juanpgarza/stock-addons",
     "author": "juanpgarza",
     "license": "AGPL-3",
-    "depends": ["stock", "stock_picking_state"],
+    "depends": ["stock", "stock_picking_state", "sale_order_type_invoice_policy"],
     "data": [
         'data/data.xml',
         'views/stock_picking_views.xml',

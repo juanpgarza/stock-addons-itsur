@@ -3,6 +3,7 @@
 
 from odoo.exceptions import ValidationError
 from odoo import models, fields, api, _
+from odoo.tools import float_compare
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -53,3 +54,21 @@ class StockPicking(models.Model):
                 self.move_line_ids.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'qty_done': False})
                 # import pdb; pdb.set_trace()
         super(StockPicking,self).write(values)
+
+    def _check_sale_paid(self):        
+        if self.state_detail_id.next_state():
+            return True
+        else:
+            # super(StockPicking,self)._check_sale_paid()
+            # tuve que sobreescribir _check_sale_paid porque no funcionaba
+            precision = self.env['decimal.precision'].precision_get(
+                'Product Unit of Measure')
+            invoice_status = self.sale_id.mapped(
+                'order_line.invoice_lines.invoice_id.state')
+            if (set(invoice_status) - set(['paid'])) or any(
+                    (float_compare(line.product_uom_qty,
+                                line.qty_invoiced,
+                                precision_digits=precision) > 0)
+                    for line in self.sale_id.order_line):
+                return False
+            return True        
