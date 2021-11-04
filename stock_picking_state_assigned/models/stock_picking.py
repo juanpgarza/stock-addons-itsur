@@ -59,7 +59,8 @@ class StockPicking(models.Model):
                 # import pdb; pdb.set_trace()
             values["state_detail_user_id"] = self.env.uid
         if 'state' in values:
-            if values["state"] == 'done' and self.state_detail_user_id.id == self.env.uid:
-                raise ValidationError("El usuario que preparó el pedido no puede ser el mismo que válida su entrega")
+            if not self.user_has_groups('stock_picking_state_assigned.group_stock_permitir_preparar_entregar'):
+                if self.picking_type_id.code == 'outgoing' and values["state"] == 'done' and self.state_detail_user_id.id == self.env.uid:
+                    raise ValidationError("El usuario que preparó el pedido no puede ser el mismo que válida su entrega")
         super(StockPicking,self).write(values)
         

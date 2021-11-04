@@ -22,4 +22,9 @@
         <field name="picking_type">outgoing</field>
     </record>
 
+    <record id="group_stock_permitir_preparar_entregar" model="res.groups">
+        <field name="name">Permitir que el mismo usuario prepare y entregue el pedido (omitir control cruzado)</field>
+        <field name="category_id" ref="base.module_category_warehouse_management"/>
+    </record>
+
 </odoo>
