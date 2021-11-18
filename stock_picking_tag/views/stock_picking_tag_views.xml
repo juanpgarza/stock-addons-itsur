@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="stock_picking_tag_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.tag.tree</field>
+        <field name="model">stock.picking.tag</field>
+        <field name="arch" type="xml">
+		<tree string="Tags de transferencias" >
+			<field name="name" />
+		</tree>
+	    </field>
+	</record>
+
+    <act_window id="action_stock_picking_tag"  
+            name="Tags de transferencias"
+            res_model="stock.picking.tag" 
+            view_mode="tree,form"
+            target="current"/>
+
+    <menuitem action="action_stock_picking_tag" id="menu_stock_picking_tag" 
+    parent="stock.menu_stock_config_settings" name="Tags de transferencias" sequence="3" />
+
+
+</odoo>
